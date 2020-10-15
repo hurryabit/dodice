@@ -7,16 +7,16 @@ const AGGREGATE = "AGGREGATE"; // number
 
 const spec: GraphSpec = {
     [FILE_CONTENTS]: null,
-    [EXTRACT_LIST]: (g, key): string[] => {
-        const file_contents = g.get_value(FILE_CONTENTS, key) as string;
+    [EXTRACT_LIST]: (g, file): string[] => {
+        const file_contents = g.get_value(FILE_CONTENTS, file) as string;
         return file_contents.split(/\r?\n/).map(line => line.trim()).filter(line => line != "")
     },
-    [EXTRACT_NUMBER]: (g, key): number => {
-        const file_contents = g.get_value(FILE_CONTENTS, key) as string;
+    [EXTRACT_NUMBER]: (g, file): number => {
+        const file_contents = g.get_value(FILE_CONTENTS, file) as string;
         return Number.parseInt(file_contents.trim());
     },
-    [AGGREGATE]: (g, key): number => {
-        const list = g.get_value(EXTRACT_LIST, key) as string[];
+    [AGGREGATE]: (g, file): number => {
+        const list = g.get_value(EXTRACT_LIST, file) as string[];
         const numbers = list.map(file => g.get_value(EXTRACT_NUMBER, file) as number);
         return numbers.reduce((x, y) => x + y, 0);
     },
@@ -37,21 +37,21 @@ class TracedGraph implements GraphReader {
             if (rule === null) {
                 traced_spec[layer] = null;
             } else {
-                traced_spec[layer] = (g: GraphReader, key: string) => {
-                    this.trace.push([layer, key]);
-                    return rule(g, key);
+                traced_spec[layer] = (g: GraphReader, file: string) => {
+                    this.trace.push([layer, file]);
+                    return rule(g, file);
                 }
             }
         }
         this.graph = new Graph(traced_spec);
     }
 
-    get_value(layer: string, key: string): unknown {
-        return this.graph.get_value(layer, key);
+    get_value(layer: string, file: string): unknown {
+        return this.graph.get_value(layer, file);
     }
 
-    set_input(layer: string, key:string, value: unknown): void {
-        this.graph.set_input(layer, key, value);
+    set_input(layer: string, file:string, value: unknown): void {
+        this.graph.set_input(layer, file, value);
     }
 }
 
