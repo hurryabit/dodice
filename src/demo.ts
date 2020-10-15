@@ -4,7 +4,7 @@ import { Graph, GraphReader, GraphSpec } from './graph';
 /*
 PROBLEM DESCRIPTION:
 
-We files looking like
+We have files looking like
 
 *.lst: foo.dat,bar.dat
 *.dat: 13
