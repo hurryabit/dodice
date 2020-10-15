@@ -1,0 +1,40 @@
+{
+    "private": true,
+    "name": "dodice",
+    "version": "0.0.1",
+    "homepage": "https://github.com/hurryabit/dodice#readme",
+    "author": "Martin Huschenbett <martin.huschenbett@posteo.me>",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hurryabit/dodice.git"
+    },
+    "main": "./lib/graph.js",
+    "types": "./lib/graph.d.ts",
+    "dependencies": {
+        "deep-equal": "^2.0.4"
+    },
+    "devDependencies": {
+        "@types/deep-equal": "^1.0.1",
+        "@typescript-eslint/eslint-plugin": "^4.4.1",
+        "@typescript-eslint/parser": "^4.4.1",
+        "eslint": "^7.11.0",
+        "jest": "^26.5.3",
+        "ts-jest": "^26.4.1",
+        "ts-node": "^9.0.0",
+        "typescript": "^4.0.3"
+    },
+    "engine": {
+        "node": "^12.19.0"
+    },
+    "scripts": {
+        "build": "tsc --project tsconfig.build.json",
+        "demo": "ts-node src/demo.ts",
+        "lint": "eslint --max-warnings 0 --ext .js,.ts src/ test/",
+        "test": "jest"
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node"
+    }
+}
